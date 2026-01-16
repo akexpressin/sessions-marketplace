@@ -1,31 +1,53 @@
-import { useState } from "react";
-import Login from "./Login";
-import Sessions from "./Sessions";
-import CreateSession from "./CreateSession";
+import { useEffect, useState } from "react";
+import Login from "./pages/Login";
+import CreatorDashboard from "./pages/CreatorDashboard";
+import UserDashboard from "./pages/UserDashboard";
+import { apiFetch } from "./api";
 
 export default function App() {
-  const [loggedIn, setLoggedIn] = useState(
-    !!localStorage.getItem("access")
-  );
+  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem("access");
+
+    if (!token) {
+      setLoading(false);
+      return;
+    }
+
+    apiFetch("/api/users/profile/")
+      .then(data => {
+        setUser(data);
+      })
+      .catch(() => {
+        localStorage.removeItem("access");
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, []);
+
+  function handleLogin(userData) {
+    setUser(userData);
+  }
 
   function logout() {
     localStorage.removeItem("access");
-    setLoggedIn(false);
+    setUser(null);
   }
 
-  if (!loggedIn) {
-    return <Login onLogin={() => setLoggedIn(true)} />;
+  if (loading) {
+    return <p>Loading...</p>;
   }
 
-  return (
-    <div style={{ padding: "20px" }}>
-      <button onClick={logout} style={{ marginBottom: "20px" }}>
-        Logout
-      </button>
+  if (!user) {
+    return <Login onLogin={handleLogin} />;
+  }
 
-      <Sessions />
-      <hr />
-      <CreateSession />
-    </div>
-  );
+  if (user.role === "CREATOR") {
+    return <CreatorDashboard user={user} onLogout={logout} />;
+  }
+
+  return <UserDashboard user={user} onLogout={logout} />;
 }

@@ -26,6 +26,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -36,7 +37,6 @@ INSTALLED_APPS = [
     'users',
     'sessions.apps.SessionsConfig',
     'bookings',
-    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -142,6 +142,6 @@ GOOGLE_CLIENT_ID = "274692620646-aen45jcdsvuditg8vk7mcqi7uijde8kl.apps.googleuse
 
 CORS_ALLOW_ALL_ORIGINS = True
 
-
+CORS_ALLOW_CREDENTIALS = True
 
 
