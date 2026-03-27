@@ -70,7 +70,7 @@ ahoum-assignment/
 Clone the repository and move into the project directory:
 
 git clone <repository-url>  
-cd ahoum-assignment  
+cd sessions-marketplace  
 
 Create environment file:
 
