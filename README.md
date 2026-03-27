@@ -1,6 +1,6 @@
-# Ahoum Full Stack Assignment
+# Sessions Marketplace
 
-This repository contains a full-stack implementation for **Ahoum**
+This repository contains a full-stack implementation for **Sessions Marketplace**
 
 The project demonstrates authentication, role-based access control,
 session management, bookings, dashboards, and a minimal frontend.
